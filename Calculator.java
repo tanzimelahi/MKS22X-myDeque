@@ -43,7 +43,7 @@ public class Calculator{
     for(int i=0;i<a.length();i++){
     //  System.out.println(a.substring(i,i+1));
             if(isOperator(a.substring(i,i+1))){
-               System.out.println(list);
+               //System.out.println(list);
                double store=function(list.removeLast(),list.removeLast(),a.substring(i,i+1));
                list.addLast(store);
                //System.out.println(list);
@@ -65,7 +65,7 @@ public class Calculator{
 
   }
   public static void main(String[]args){
-
-    System.out.println(eval("1 2 + 12 %"));
+    System.out.println(eval(("1 2 3 4 5 + * - -") ));
   }
+
 }

@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 public  class MyDeque<E>{
-  public E[]data;
+  private E[]data;
   private int size,start,end;
     @SuppressWarnings("unchecked")
   public MyDeque(){
@@ -96,14 +96,16 @@ public  class MyDeque<E>{
     }
   }
   public String toString(){
-    String result="";
-
+    String result="{";
+    if(size==0){
+      return "{}";
+    }
     if(start>end){
       for(int i=start;i<data.length;i++){
-        result+=data[i];
+        result+=data[i]+" ";
       }
     for(int i=0;i<=end;i++){
-      result+=data[i];
+      result+=data[i]+" ";
     }
   }
   else{
@@ -111,7 +113,7 @@ public  class MyDeque<E>{
       result+=data[i];
     }
   }
-  return result;
+  return result+"}";
  }
  public  E removeFirst(){
    if(size==0){
@@ -137,15 +139,15 @@ public  class MyDeque<E>{
    return result;
  }
  public  E getFirst(){
+   if(size==0){
+     throw new NoSuchElementException();
+   }
    return data[start];
  }
- public int last(){
-   return end;
- }
- public int first(){
-   return start;
- }
  public  E getLast(){
+   if(size==0){
+     throw new NoSuchElementException();
+   }
    return data[end];
  }
  public E removeLast(){
@@ -171,32 +173,6 @@ public  class MyDeque<E>{
    }
    return result;
  }
+ 
 
- public static void main(String[]args){
-   String[]test={"3","2","3"};
-   MyDeque<String> name=new MyDeque<String>(10);
-   for(int i=0;i<8;i++){
-     name.addLast(""+i);
-   }
-   System.out.println(name);
-   System.out.println(Arrays.toString(name.data));
-  name.removeFirst();
-   System.out.println(Arrays.toString(name.data));
-  System.out.println(name);
-  while(name.size()!=0){
-    name.removeFirst();
-    System.out.println(name);
-    System.out.println(Arrays.toString(name.data));
-    System.out.println(name.last()+" this is lastIndex");
-    System.out.println(name.first()+"this is firstIndex");
-  }
-  System.out.println(name);
-  System.out.println(Arrays.toString(name.data));
-  System.out.println(name.size());
-  name.addLast("go");
-  System.out.println(name);
-  System.out.println(name.size());
-  System.out.println(Arrays.toString(name.data));
-
- }
 }
