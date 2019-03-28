@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public  class MyDeque<E>{
   public E[]data;
   private int size,start,end;
@@ -6,16 +7,9 @@ public  class MyDeque<E>{
       data = (E[])new Object[100];
       start=0;
       end=0;
-      size=0;
+      size=this.size();
   }
-  @SuppressWarnings("unchecked")
-  public MyDeque(E[]ary,int start,int end){
-    data=ary;
-    this.start=start;
-    this.end=end;
-    size=this.size();
 
-  }
   @SuppressWarnings("unchecked")
   public MyDeque(int startingCapacity){
    data = (E[])new Object[startingCapacity];
@@ -24,15 +18,7 @@ public  class MyDeque<E>{
     size=0;
   }
   public int size(){ // works
-          if(start>end){
-            this.size= data.length-start+end+1;
-            return this.size;
-          }
-          else{
-
-            this.size=end-start+1;
-            return this.size;
-          }
+     return this.size;
 
   }
   public  void  getStart(){
@@ -90,6 +76,21 @@ public  class MyDeque<E>{
     }
       size++;
   }
+  public void addFirst(E element){
+    if(size==data.length){
+      this.resize();
+    }
+    if(start==0){
+      data[data.length-1]=element;
+      start=data.length-1;
+      size++;
+    }
+    else{
+      data[start-1]=element;
+      start=start-1;
+      size++;
+    }
+  }
   public String toString(){
     String result="";
 
@@ -108,15 +109,60 @@ public  class MyDeque<E>{
   }
   return result;
  }
- public static void main(String[]args){
-   String[]data={null,null,"c","d"};
-   MyDeque<String> test=new MyDeque<String>(data,2,3);
-   for(int i=0;i<10;i++){
-    test.addLast(""+i);
+ public  E removeFirst(){
+   E result =data[start];
+   if (start==data.length){
+     data[start]=null;
+     start=0;
+     size--;
    }
-   test.getStart();
-   test.getEnd();
-  System.out.println(test);
+   else{
+     data[start]=null;
+     start=start+1;
+     size--;
+   }
+   return result;
+ }
+ public  E getFirst(){
+   return data[start];
+ }
+ public  E getLast(){
+   return data[end];
+ }
+ public E removeLast(){
+   E result=data[end];
+   if(end==0){
+     data[end]=null;
+     end=data.length;
+     size--;
+   }
+   else{
+     data[end]=null;
+     end--;
+     size--;
+   }
+   return result;
+ }
 
+ public static void main(String[]args){
+   String[]test={"3","2","3"};
+   MyDeque<String> name=new MyDeque<String>(10);
+   for(int i=0;i<8;i++){
+     name.addLast(""+i);
+   }
+   name.addFirst("first");
+   name.addFirst("real");
+   name.addFirst("second");
+   System.out.println(name);
+   name.removeFirst();
+   System.out.println(name);
+   name.removeLast();
+   System.out.println(name);
+   name.addLast("test");
+   name.addFirst("go");
+   System.out.println(name);
+   System.out.println(name.size());
+   System.out.println(name.getFirst());
+   System.out.println(name.getLast());
  }
 }
