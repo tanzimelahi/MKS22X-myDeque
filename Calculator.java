@@ -8,19 +8,19 @@ public class Calculator{
       ary[3]="/";
       ary[4]="%";
       if(operator.equals(ary[0])){
-        return first+second;
+        return second+first;
       }
       else if(operator.equals(ary[1])){
-        return first-second;
+        return second-first;
       }
       else if(operator.equals(ary[2])){
-        return first*second;
+        return second*first;
       }
       else if(operator.equals(ary[3])){
-        return first/second;
+        return second/first;
       }
       else {
-        return first%second;
+        return second%first;
       }
   }
   public static boolean isOperator(String a){
@@ -38,15 +38,15 @@ public class Calculator{
     return false;
   }
   public static double eval(String a){
-    MyDeque<Double>list=new MyDeque<Double>(a.length());
+    MyDeque<Double>list=new MyDeque<Double>();
     String memo="";
     for(int i=0;i<a.length();i++){
-      System.out.println(a.substring(i,i+1));
+    //  System.out.println(a.substring(i,i+1));
             if(isOperator(a.substring(i,i+1))){
                System.out.println(list);
-               double store=function(list.removeFirst(),list.removeLast(),a.substring(i,i+1));
+               double store=function(list.removeLast(),list.removeLast(),a.substring(i,i+1));
                list.addLast(store);
-               System.out.println(list);
+               //System.out.println(list);
                memo="";
                i++;
           }
@@ -65,7 +65,7 @@ public class Calculator{
 
   }
   public static void main(String[]args){
-    System.out.println(eval("10 2.0 +"));
-    System.out.println(eval("11 3 - 4 + 2.5 *"));
+
+    System.out.println(eval("1 2 + 12 %"));
   }
 }
