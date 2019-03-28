@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 public  class MyDeque<E>{
   public E[]data;
   private int size,start,end;
@@ -20,12 +21,6 @@ public  class MyDeque<E>{
   public int size(){ // works
      return this.size;
 
-  }
-  public  void  getStart(){
-    System.out.println(start);
-  }
-  public void getEnd(){
-    System.out.println(end);
   }
   @SuppressWarnings("unchecked")
   private void resize(){ // seems to work,not very thoroughly checked though
@@ -57,16 +52,18 @@ public  class MyDeque<E>{
     }
   }
   public void addLast(E element){// thorougly checked{
-      if(size==0){
-        data[0]=element;
-      }
+    if(element==null){
+      throw new NullPointerException();
+    }
       else{
       if(size==data.length){
         this.resize();
       }
-      if(start!=0 && end==data.length-1){
+      if(size==0){
         data[0]=element;
-        size++;
+      }
+      else if(start!=0 && end==data.length-1){
+        data[0]=element;
         end=0;
       }
       else{
@@ -77,10 +74,17 @@ public  class MyDeque<E>{
       size++;
   }
   public void addFirst(E element){
+    if(element==null){
+      throw new NullPointerException();
+    }
     if(size==data.length){
       this.resize();
     }
-    if(start==0){
+    if(size==0){
+      data[0]=element;
+      size++;
+    }
+    else if(start==0){
       data[data.length-1]=element;
       start=data.length-1;
       size++;
@@ -110,8 +114,17 @@ public  class MyDeque<E>{
   return result;
  }
  public  E removeFirst(){
+   if(size==0){
+     throw new NoSuchElementException();
+   }
    E result =data[start];
-   if (start==data.length){
+   if(start==end){
+     data[start]=null;;
+     start=0;
+     end=0;
+     size--;
+   }
+   else if (start==data.length){
      data[start]=null;
      start=0;
      size--;
@@ -126,12 +139,27 @@ public  class MyDeque<E>{
  public  E getFirst(){
    return data[start];
  }
+ public int last(){
+   return end;
+ }
+ public int first(){
+   return start;
+ }
  public  E getLast(){
    return data[end];
  }
  public E removeLast(){
+   if(size==0){
+     throw new NoSuchElementException();
+   }
    E result=data[end];
-   if(end==0){
+   if(end==start){
+     data[end]=null;
+     start=0;
+     end=0;
+     size--;
+   }
+  else if(end==0){
      data[end]=null;
      end=data.length;
      size--;
@@ -150,19 +178,25 @@ public  class MyDeque<E>{
    for(int i=0;i<8;i++){
      name.addLast(""+i);
    }
-   name.addFirst("first");
-   name.addFirst("real");
-   name.addFirst("second");
    System.out.println(name);
-   name.removeFirst();
-   System.out.println(name);
-   name.removeLast();
-   System.out.println(name);
-   name.addLast("test");
-   name.addFirst("go");
-   System.out.println(name);
-   System.out.println(name.size());
-   System.out.println(name.getFirst());
-   System.out.println(name.getLast());
+   System.out.println(Arrays.toString(name.data));
+  name.removeFirst();
+   System.out.println(Arrays.toString(name.data));
+  System.out.println(name);
+  while(name.size()!=0){
+    name.removeFirst();
+    System.out.println(name);
+    System.out.println(Arrays.toString(name.data));
+    System.out.println(name.last()+" this is lastIndex");
+    System.out.println(name.first()+"this is firstIndex");
+  }
+  System.out.println(name);
+  System.out.println(Arrays.toString(name.data));
+  System.out.println(name.size());
+  name.addLast("go");
+  System.out.println(name);
+  System.out.println(name.size());
+  System.out.println(Arrays.toString(name.data));
+
  }
 }
